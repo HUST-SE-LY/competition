@@ -9,23 +9,46 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:click={() => {dispatch('close')}} transition:fade class="container">
-  <div on:click={(e) => {e.stopPropagation()}} transition:fly="{{y: 20, duration: 1000}}" class="dairy-page">
+<div
+  on:click={() => {
+    dispatch("close");
+  }}
+  transition:fade
+  class="container"
+>
+  <div
+    on:click={(e) => {
+      e.stopPropagation();
+    }}
+    transition:fly={{ y: 20, duration: 1000 }}
+    class="dairy-page"
+  >
     <p>{dairyContents[currentIndex].title}</p>
     {#each dairyContents[currentIndex].paragraph as p}
       <p>{p}</p>
     {/each}
   </div>
-  <div on:click={(e) => {e.stopPropagation()}} class="menu">
+  <div
+    on:click={(e) => {
+      e.stopPropagation();
+    }}
+    class="menu"
+  >
     {#each dairyContents as singleDairy, index (index)}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div on:click={() => {currentIndex = index}} class={`button ${index === currentIndex ? "selected" : ""}`}></div>
+      <div
+        on:click={() => {
+          currentIndex = index;
+        }}
+        class={`button ${index === currentIndex ? "selected" : ""}`}
+      />
     {/each}
   </div>
 </div>
 
 <style>
+  
   .container {
     background: rgba(71, 71, 71, 0.4);
     position: absolute;
@@ -63,9 +86,9 @@
     width: 80%;
     height: 60%;
     overflow-y: auto;
-    background-image: url('/dairyPage.png');
+    background-image: url("/dairyPage.png");
     background-size: cover;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     gap: 2rem;

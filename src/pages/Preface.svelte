@@ -5,7 +5,7 @@
 </script>
 
 <div class="container" out:fade>
-  <p in:fly="{{y: -50, duration: 500}}">前情提要</p>
+  <p class="title" in:fly="{{y: -50, duration: 500}}">前情提要</p>
   <p in:fly="{{y: 50, duration: 500, delay: 300}}">某一天，你在老房子里突然发现一本日记本，是去世已久的爷爷留下的。</p>
   <p in:fly="{{y: 50, duration: 500, delay: 400}}">爷爷是前任的恩施州文化馆的老馆长，日记本里大多数都记载着他去寻访、保护恩施文化的过程。</p>
   <p in:fly="{{y: 50, duration: 500, delay: 500}}">翻着看着，你发现这日记本有些异样，与恩施玉露有关的几页被折起来了。而在最后一篇日记中，爷爷提到自己放在床下上锁的宝贝箱子......</p>
@@ -48,6 +48,17 @@
     }
   }
 
+  @font-face {
+    font-family: "Smiley";
+    src: url("/SmileySans-Oblique.ttf.woff2");
+  }
+  @font-face {
+    font-family: 'HongLei';
+    src: url('/HongLei.ttf')
+  }
+
+  
+
   .container {
     width: 100%;
     display: flex;
@@ -58,6 +69,16 @@
     padding: 16px 32px;
     background-image: url('/prefaceBg.png');
     min-height: 100vh;
+    font-family: 'Smiley';
+    letter-spacing: 1px;
+    line-height: 1.5em;
+  }
+
+
+  .title {
+    font-family: 'HongLei';
+    letter-spacing: 2px;
+    font-size: 20px;
   }
 
   .foot-word {

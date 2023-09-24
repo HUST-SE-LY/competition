@@ -13,9 +13,9 @@
     if (isLoading) return;
     isLoading = true;
     if (currentIndex + 1 >= dialogs.length) {
-      dispatch('over')
+      dispatch("over");
       isOver = true;
-      localStorage.setItem('hasReadMapPrefaceDialog', '1');
+      localStorage.setItem("hasReadMapPrefaceDialog", "1");
       return;
     }
     currentIndex += 1;
@@ -26,37 +26,42 @@
     }, 200);
   };
   onMount(() => {
-    if(localStorage.getItem('hasReadMapPrefaceDialog')) return;
+    if (localStorage.getItem("hasReadMapPrefaceDialog")) return;
     isOver = false;
-  })
+  });
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div>
   {#if !isOver}
-  <div out:fade={{ duration: 300 }} on:click={nextDialog} class="container">
-    <div in:fly={{ y: 100, duration: 500 }} class="dialog-main">
-      <p>{dialogs[currentIndex].role}</p>
-      <div class="dialog-content">
-        {#if freshDialog}
-          <p transition:fly={{ y: 8, duration: 200 }}>
-            {dialogs[currentIndex].content}
-          </p>
-        {/if}
+    <div out:fade={{ duration: 300 }} on:click={nextDialog} class="container">
+      <div in:fly={{ y: 100, duration: 500 }} class="dialog-main">
+        <p>{dialogs[currentIndex].role}</p>
+        <div class="dialog-content">
+          {#if freshDialog}
+            <p transition:fly={{ y: 8, duration: 200 }}>
+              {dialogs[currentIndex].content}
+            </p>
+          {/if}
+        </div>
       </div>
+      <img
+        in:fly={{ x: 50, duration: 1000 }}
+        class="role-image"
+        src={dialogs[currentIndex].imageUrl}
+        alt="role"
+      />
     </div>
-    <img
-      in:fly={{ x: 50, duration: 1000 }}
-      class="role-image"
-      src={dialogs[currentIndex].imageUrl}
-      alt="role"
-    />
-  </div>
   {/if}
 </div>
 
 <style>
+  @font-face {
+    font-family: "Smiley";
+    src: url("/SmileySans-Oblique.ttf.woff2");
+  }
+
   .container {
     position: absolute;
     top: 0;
@@ -65,6 +70,7 @@
     height: 100%;
     background: rgba(225, 232, 226, 0.67);
     z-index: 10;
+    font-family: 'Smiley';
   }
 
   .dialog-main {

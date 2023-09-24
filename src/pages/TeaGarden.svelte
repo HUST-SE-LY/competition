@@ -21,6 +21,10 @@
 </div>
 
 <style>
+  @font-face {
+    font-family: "Smiley";
+    src: url("/SmileySans-Oblique.ttf.woff2");
+  }
   .container {
     width: 100%;
     display: flex;
@@ -31,6 +35,9 @@
     background-image: url("/prefaceBg.png");
     height: 100vh;
     position: relative;
+    font-family: "Smiley";
+    letter-spacing: 1px;
+    line-height: 1.5em;
   }
 
   .title-container {

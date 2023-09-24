@@ -118,6 +118,16 @@
       transform: translateY(0px);
     }
   }
+
+  @font-face {
+    font-family: "Smiley";
+    src: url("/SmileySans-Oblique.ttf.woff2");
+  }
+
+  @font-face {
+    font-family: 'HongLei';
+    src: url('/HongLei.ttf')
+  }
   .container {
     width: 100%;
     position: relative;
@@ -136,10 +146,9 @@
   .button {
     position: absolute;
     border-radius: 99px;
-    width: 45px;
-    box-sizing: border-box;
+    width: 1em;
     text-align: center;
-    padding: 1rem 0.5rem;
+    padding: 0.2rem 0.3rem;
     border: 3px solid rgba(131, 135, 11, 1);
     background: radial-gradient(
       70% 59.76%,
@@ -149,6 +158,9 @@
     );
     animation: float 10s infinite linear;
     z-index: 10;
+    font-size: 20px;
+    font-family: 'HongLei';
+    color: rgba(85, 87, 26, 1);
   }
 
   .button1 {
@@ -178,6 +190,8 @@
     align-items: center;
     display: flex;
     gap: 2rem;
+    font-family: 'Smiley';
+    letter-spacing: 1px;
   }
 
   .diary {
