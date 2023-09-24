@@ -12,11 +12,10 @@
     e.stopPropagation();
     if (isLoading) return;
     isLoading = true;
-    console.log(dialogs.length)
-    console.log(currentIndex)
     if (currentIndex + 1 >= dialogs.length) {
-      console.log('over')
+      dispatch('over')
       isOver = true;
+      localStorage.setItem('hasReadMapPrefaceDialog', '1');
       return;
     }
     currentIndex += 1;
@@ -27,7 +26,8 @@
     }, 200);
   };
   onMount(() => {
-    isOver = false
+    if(localStorage.getItem('hasReadMapPrefaceDialog')) return;
+    isOver = false;
   })
 </script>
 

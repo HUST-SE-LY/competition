@@ -7,3 +7,8 @@ export interface SingleDialog {
     to: number;
   }[]
 }
+
+export interface SingleDairyPage {
+  title: string;
+  paragraph: string[];
+}
