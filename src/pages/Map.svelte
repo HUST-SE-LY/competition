@@ -8,6 +8,10 @@
   import { onMount } from "svelte";
   let isShowDairy = false;
   let isShowDairyContent = false;
+  let showEndDialog1 = false;
+  let highlightDairy = false;
+  let showEndDialog2 = false;
+  let showLetter = false;
   const dairyContents: SingleDairyPage[] = [
     {
       title: "1983年5月2日 星期日 多云",
@@ -42,8 +46,12 @@
     isShowDairy = true;
   };
   const showDairyContent = () => {
+    if (highlightDairy) {
+      showEndDialog2 = true;
+    } else {
+      isShowDairyContent = true;
+    }
     isShowDairy = false;
-    isShowDairyContent = true;
   };
   const dialogs: SingleDialog[] = [
     {
@@ -68,24 +76,121 @@
       imageUrl: "/role.png",
     },
   ];
+  const endDialog: SingleDialog[] = [
+    {
+      role: "老杨孙女",
+      content:
+        "好神奇！这个水杯原来是特制的，倒水入杯...彭爷爷好聪明啊！那么这个谜底—五二零又是什么意思呢？",
+      imageUrl: "/role.png",
+      select: [
+        {
+          content: "谐音“我爱你”的意思",
+          to: 1,
+        },
+        {
+          content: "和密码有关",
+          to: 3,
+        },
+      ],
+    },
+    {
+      role: "我",
+      content: "五二零...三个数字，“我爱你”？",
+    },
+    {
+      role: "老杨孙女",
+      content: "彭爷爷还真会开玩笑呢...要不再想想？",
+      imageUrl: "/role.png",
+      select: [
+        {
+          content: "和密码有关",
+          to: 4,
+        },
+      ],
+    },
+    {
+      role: "我",
+      content: "会不会是密码？但也没有什么需要密码的地方啊...",
+    },
+    {
+      role: "老杨孙女",
+      content:
+        "在着干想也没有头绪，要不试试到处找找有没有跟这三个数字有关的东西吧！（点击下页中可点击的地方寻找线索）",
+      imageUrl: "/role.png",
+    },
+  ];
+  const endDialog2: SingleDialog[] = [
+    {
+      role: "我",
+      content: "是日记本！快过来看!!!",
+    },
+    {
+      role: "我",
+      content:
+        "2019年5月20日 ，星期五，多云...肯定跟这篇日记有关，但是这篇日记有什么特别的呢？",
+    },
+    {
+      role: "老杨孙女",
+      content:
+        "唔...“接着，老杨谈到了...是他写下的那一本《茶叶生产与初制》...保存下来才得以传承”",
+      imageUrl: "/role.png",
+    },
+    {
+      role: "老杨孙女",
+      content:
+        "！！！等等！这个里面提到的《茶叶生产与初制》，我好像在哪里见过！",
+      imageUrl: "/role.png",
+    },
+    {
+      role: "",
+      content:
+        "她带着你来到了老杨的办公室，在书柜的左上角陈列着这本古老的书。于是你们取下书，发现里面果然藏着东西—一封信。",
+    },
+  ];
   const closeDairy = () => {
     isShowDairy = true;
     isShowDairyContent = false;
-  }
+  };
   onMount(() => {
-    if(localStorage.getItem('hasReadMapPrefaceDialog')) {
-      isShowDairy = true
+    if (localStorage.getItem("hasReadMapPrefaceDialog")) {
+      isShowDairy = true;
     }
-  })
+    if (localStorage.getItem("endDialog1")) {
+      showEndDialog1 = true;
+      isShowDairy = false;
+    }
+  });
 </script>
+
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div transition:fade class="container">
-  <Dialog on:over={showDairy} {dialogs} />
+  {#if !localStorage.getItem("hasReadMapPrefaceDialog")}
+    <Dialog
+      on:over={() => {
+        localStorage.setItem("hasReadMapPrefaceDialog", "1");
+        showDairy();
+      }}
+      {dialogs}
+    />
+  {/if}
+
   <img src="/mapBg.png" class="map-background" alt="地图" />
   {#if isShowDairy}
-    <div transition:fade on:click={() => push('/teaGarden')} class="button button1">菜园</div>
-    <div transition:fade on:click={() => push('/teaFactory')} class="button button2">制茶厂</div>
+    <div
+      transition:fade
+      on:click={() => push("/teaGarden")}
+      class="button button1"
+    >
+      菜园
+    </div>
+    <div
+      transition:fade
+      on:click={() => push("/teaFactory")}
+      class="button button2"
+    >
+      制茶厂
+    </div>
     <div transition:fade class="button button3">培训基地</div>
     <div transition:fly={{ y: 50, duration: 500 }} class="footer">
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -94,12 +199,40 @@
         class="diary"
         src={diary}
         alt="爷爷的日记本"
+        style={highlightDairy ? "align-self: center;" : ""}
       />
-      <p>实地考察完毕后前往体验探寻爷爷的最后的心愿》》》</p>
+      {#if !highlightDairy}
+        <div on:click={() => push("/find")}>
+          实地考察完毕后前往体验探寻爷爷的最后的心愿》》》
+        </div>
+      {/if}
     </div>
   {/if}
   {#if isShowDairyContent}
     <DairyContent on:close={closeDairy} {dairyContents} />
+  {/if}
+  {#if showEndDialog1}
+    <Dialog
+      dialogs={endDialog}
+      on:over={() => {
+        isShowDairy = true;
+        highlightDairy = true;
+      }}
+    />
+  {/if}
+  {#if showEndDialog2}
+    <Dialog
+      dialogs={endDialog2}
+      on:over={() => {
+        showLetter = true;
+      }}
+    />
+  {/if}
+  {#if showLetter}
+  <div transition:fade class="letter-container">
+    <div transition:fly={{y:50, duration:1000}} class="letter">11111</div>
+  </div>
+    
   {/if}
 </div>
 
@@ -125,8 +258,8 @@
   }
 
   @font-face {
-    font-family: 'HongLei';
-    src: url('/HongLei.ttf')
+    font-family: "HongLei";
+    src: url("/HongLei.ttf");
   }
   .container {
     width: 100%;
@@ -159,7 +292,7 @@
     animation: float 10s infinite linear;
     z-index: 10;
     font-size: 20px;
-    font-family: 'HongLei';
+    font-family: "HongLei";
     color: rgba(85, 87, 26, 1);
   }
 
@@ -190,11 +323,36 @@
     align-items: center;
     display: flex;
     gap: 2rem;
-    font-family: 'Smiley';
+    font-family: "Smiley";
     letter-spacing: 1px;
+    justify-content: center;
   }
 
   .diary {
     height: 100%;
+  }
+
+  .letter {
+    background-image: url("/prefaceBg.png");
+    width: 80%;
+    height: 60%;
+    position: absolute;
+    z-index: 100;
+    left: 10%;
+    top: 20%;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .letter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .letter-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(225, 232, 226, 0.67);
   }
 </style>

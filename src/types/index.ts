@@ -5,7 +5,8 @@ export interface SingleDialog {
   select?: {
     content: string;
     to: number;
-  }[]
+  }[];
+  end?: boolean
 }
 
 export interface SingleDairyPage {

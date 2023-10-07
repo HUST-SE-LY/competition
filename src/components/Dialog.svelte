@@ -11,11 +11,11 @@
   const nextDialog = (e: Event) => {
     e.stopPropagation();
     if (isLoading) return;
+    if(dialogs[currentIndex].select) return;
     isLoading = true;
     if (currentIndex + 1 >= dialogs.length) {
       dispatch("over");
       isOver = true;
-      localStorage.setItem("hasReadMapPrefaceDialog", "1");
       return;
     }
     currentIndex += 1;
@@ -25,8 +25,17 @@
       freshDialog = true;
     }, 200);
   };
+  const switchPage = (to: number) => {
+    if (isLoading) return;
+    isLoading = true;
+    currentIndex = to;
+    freshDialog = false;
+    setTimeout(() => {
+      isLoading = false;
+      freshDialog = true;
+    }, 200);
+  }
   onMount(() => {
-    if (localStorage.getItem("hasReadMapPrefaceDialog")) return;
     isOver = false;
   });
 </script>
@@ -36,6 +45,13 @@
 <div>
   {#if !isOver}
     <div out:fade={{ duration: 300 }} on:click={nextDialog} class="container">
+      {#if dialogs[currentIndex].select}
+        <div class="select-box">
+          {#each dialogs[currentIndex].select as item,i}
+            <div class="select" on:click={(e) => {e.stopPropagation(); switchPage(item.to)}}>{item.content}</div>
+          {/each}
+        </div>
+      {/if}
       <div in:fly={{ y: 100, duration: 500 }} class="dialog-main">
         <p>{dialogs[currentIndex].role}</p>
         <div class="dialog-content">
@@ -73,6 +89,13 @@
     font-family: 'Smiley';
   }
 
+  .select-box {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .dialog-main {
     position: absolute;
     bottom: 20px;
@@ -96,5 +119,14 @@
     position: absolute;
     bottom: -70px;
     right: -20px;
+  }
+
+  .select {
+    background: rgba(219, 245, 125, 0.78);
+    border: 3px solid rgba(166, 189, 21, 1);
+    padding: 8px 32px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 20px;
   }
 </style>
