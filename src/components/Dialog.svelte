@@ -119,6 +119,7 @@
     position: absolute;
     bottom: -70px;
     right: -20px;
+    pointer-events: none;
   }
 
   .select {
