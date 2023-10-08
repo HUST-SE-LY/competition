@@ -6,7 +6,6 @@ let isOpenBgm = false;
 let audio:HTMLAudioElement;
 const switchBgm = () => {
   isOpenBgm = !isOpenBgm;
-  console.log(isOpenBgm)
   if(isOpenBgm) {
     audio.play();
   } else {
@@ -25,7 +24,7 @@ const switchBgm = () => {
       <div class="block"></div>
     {/if}
     <img src={audioOpen} class="audio-image" alt="播放器" />
-    <audio src="https://m701.music.126.net/20231008221305/17b1d1c5ebb424c94755fe3bd3f2d862/jdyyaac/0e0b/015c/545b/9a625b936466a7442180c117beac1df3.m4a" preload="metadata" loop bind:this={audio}></audio>
+    <audio src="/bgm.m4a" preload="metadata" loop bind:this={audio}></audio>
   </div>
   <Router {routes} />
 </div>
