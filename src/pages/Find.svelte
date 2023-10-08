@@ -264,6 +264,7 @@
     text-align: center;
     outline: none;
     font-family: 'Smiley';
+    width: 150px;
   }
 
   .button {
