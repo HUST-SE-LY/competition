@@ -1,24 +1,33 @@
-<script>
+<script lang="ts">
   import { pop } from "svelte-spa-router";
   import { fade } from "svelte/transition";
+  import Dialog from "../components/Dialog.svelte";
+  import type { SingleDialog } from "../types";
   import home from '/src/assets/home.svg'
+  const trainCenterDialog:SingleDialog[] = [{
+    role: '老杨孙女',
+    content: "学习制茶可不是一件容易的事呢！揉捻这一步里面的门道可多了。手的温度、揉茶的手法、对茶叶状态的判断...这些都是需要经验沉淀的！这也导致了手艺传承难的问题...",
+    imageUrl: '/role.png'
+  }]
 </script>
 
 <div transition:fade class="container">
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="title-container">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={() => pop()} class="block" ><img src={home} class="image" alt="home" /></div>
-    <p class="title">生长环境</p>
+    <div on:click={() => pop()} class="block" >
+      <img src={home} class="image" alt="home" />
+    </div>
+    <p class="title">培训基地</p>
   </div>
   <div class="main-content">
     <p class="content">
-      玉露偏爱温暖、湿润和阴凉的环境。最适宜的生长温度为15-25摄氏度，相对湿度保持在50-75%之间。选择通风良好的位置，避免暴露在强烈的阳光下，同时保持空气湿润。
+      基地里有许多穿着相同马甲的学徒，一组学徒有一个老师傅带着。
     </p>
     <p class="content">
-      玉露喜欢富含有机质的酸性土壤。在盆栽中，可以选择与泥炭、腐叶土和珍珠岩等混合的多孔性土壤。确保土壤排水良好，避免积水。
-    </p>
+      有人在室内上理论课，有人在制茶室演练如何揉茶。整个培训基地看起来忙碌却又井井有条。
   </div>
+  <Dialog dialogs={trainCenterDialog} />
 </div>
 
 <style>
@@ -67,6 +76,7 @@
     color: rgba(101, 115, 9, 1);
     margin-top: 1.5em;
   }
+
   .image {
     width: 20px;
   }

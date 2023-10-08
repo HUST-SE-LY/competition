@@ -6,6 +6,7 @@
   import DairyContent from "../components/DairyContent.svelte";
   import { push } from "svelte-spa-router";
   import { onMount } from "svelte";
+  import Button from "../components/Button.svelte";
   let isShowDairy = false;
   let isShowDairyContent = false;
   let showEndDialog1 = false;
@@ -155,9 +156,20 @@
     if (localStorage.getItem("hasReadMapPrefaceDialog")) {
       isShowDairy = true;
     }
+    if(localStorage.getItem('endDialog2over')) {
+      isShowDairy = false;
+      showLetter = true;
+      return;
+    }
+    if(localStorage.getItem('endDialog1over')) {
+      isShowDairy = true;
+      highlightDairy = true;
+      return;
+    }
     if (localStorage.getItem("endDialog1")) {
       showEndDialog1 = true;
       isShowDairy = false;
+      return;
     }
   });
 </script>
@@ -191,7 +203,7 @@
     >
       制茶厂
     </div>
-    <div transition:fade class="button button3">培训基地</div>
+    <div transition:fade  on:click={() => push("/trainCenter")} class="button button3">培训基地</div>
     <div transition:fly={{ y: 50, duration: 500 }} class="footer">
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
       <img
@@ -215,6 +227,7 @@
     <Dialog
       dialogs={endDialog}
       on:over={() => {
+        localStorage.setItem('endDialog1over', '1')
         isShowDairy = true;
         highlightDairy = true;
       }}
@@ -224,13 +237,22 @@
     <Dialog
       dialogs={endDialog2}
       on:over={() => {
+        localStorage.setItem('endDialog2over', '1');
         showLetter = true;
       }}
     />
   {/if}
   {#if showLetter}
   <div transition:fade class="letter-container">
-    <div transition:fly={{y:50, duration:1000}} class="letter">11111</div>
+    <div transition:fly={{y:50, duration:1000}} class="letter">
+      <p class="letter-title">我的孩子：</p>
+      <p class="letter-content">找到这封信一定很不容易吧哈哈。相信你一定已经拜访过我的老朋友，参观了茶坊。</p>
+      <p class="letter-content">如你所见，一片片绿叶上下沉浮，搅动着千年的文化。在手与叶的摩擦交锋，高温的烘烤定性后才诞生出这如松针般的茶叶。</p>
+      <p class="letter-content">当年，我被它深深吸引却苦恼于人们只在意它的味道，对背后的工艺与文化不甚了解。完全商业化的产业是绝绝不可行的，文化将与商业化中泯灭，玉露将失去它那独特的文化魅力，变成冰冷的商品。</p>
+      <p class="letter-content">我的孩子，我希望你能在亲身体验之后才找到这封信，理解我的良苦用心。文化传承与保护任重而道远，我这把老骨头已经没法继续走下去了。</p>
+      <p class="letter-content">过去的文化属于你们，未来也将是你们的。</p>
+    </div>
+    
   </div>
     
   {/if}
@@ -354,5 +376,14 @@
     width: 100%;
     height: 100%;
     background: rgba(225, 232, 226, 0.67);
+  }
+
+  .letter-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .letter-content {
+    margin-bottom: 16px;
   }
 </style>

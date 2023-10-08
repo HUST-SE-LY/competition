@@ -1,12 +1,13 @@
 <script>
   import { pop } from "svelte-spa-router";
+  import home from '/src/assets/home.svg'
 </script>
 
 <div class="container">
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="title-container">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={() => pop()} class="block" />
+    <div on:click={() => pop()} class="block" ><img src={home} class="image" alt="home" /></div>
     <p class="title">制作工艺</p>
   </div>
   <div class="main-content">
@@ -68,6 +69,9 @@
     width: 24px;
     height: 24px;
     background: rgba(204, 204, 204, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .main-content {
@@ -80,4 +84,10 @@
     text-indent: 2em;
     margin-bottom: 2em;
   }
+
+  .image {
+    width: 20px;
+  }
+
+  
 </style>

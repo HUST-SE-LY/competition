@@ -4,12 +4,14 @@ import Map__SvelteComponent_ from "./pages/Map.svelte";
 import TeaGarden from "./pages/TeaGarden.svelte";
 import TeaFactory from "./pages/TeaFactory.svelte";
 import Find from "./pages/Find.svelte";
+import TrainCenter from "./pages/TrainCenter.svelte";
 export const routes = {
   '/': Home,
   '/preface': Preface,
   '/map': Map__SvelteComponent_,
   '/teaGarden': TeaGarden,
   '/teaFactory': TeaFactory,
+  '/trainCenter': TrainCenter,
   '/find': Find
 }
 
