@@ -4,7 +4,7 @@
   import diary from "../assets/diary.png";
   import { fade, fly } from "svelte/transition";
   import DairyContent from "../components/DairyContent.svelte";
-  import { push } from "svelte-spa-router";
+  import { push, replace } from "svelte-spa-router";
   import { onMount } from "svelte";
   import Button from "../components/Button.svelte";
   let isShowDairy = false;
@@ -43,6 +43,10 @@
       ],
     },
   ];
+  const freshGame = () => {
+    localStorage.clear();
+    replace('/');
+  }
   const showDairy = () => {
     isShowDairy = true;
   };
@@ -251,6 +255,7 @@
       <p class="letter-content">当年，我被它深深吸引却苦恼于人们只在意它的味道，对背后的工艺与文化不甚了解。完全商业化的产业是绝绝不可行的，文化将与商业化中泯灭，玉露将失去它那独特的文化魅力，变成冰冷的商品。</p>
       <p class="letter-content">我的孩子，我希望你能在亲身体验之后才找到这封信，理解我的良苦用心。文化传承与保护任重而道远，我这把老骨头已经没法继续走下去了。</p>
       <p class="letter-content">过去的文化属于你们，未来也将是你们的。</p>
+      <div class="fresh-button" on:click={freshGame}>重新游玩</div>
     </div>
     
   </div>
@@ -385,5 +390,14 @@
 
   .letter-content {
     margin-bottom: 16px;
+  }
+
+  .fresh-button {
+    background: rgba(219, 245, 125, 0.78);
+    border: 3px solid rgba(166, 189, 21, 1);
+    padding: 8px 32px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 20px;
   }
 </style>
