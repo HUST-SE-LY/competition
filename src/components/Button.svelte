@@ -5,6 +5,10 @@
 <div class="button">{content}</div>
 
 <style>
+  @font-face {
+    font-family: "Smiley";
+    src: url("/SmileySans-Oblique.ttf.woff2");
+  }
   .button {
     width: 188px;
     height: 45px;
@@ -20,5 +24,7 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     text-align: center;
     line-height: 45px;
+    font-family: 'Smiley';
+    font-size: 24px;
   }
 </style>
