@@ -301,6 +301,7 @@
     top: 0;
     left: 0;
     object-fit: cover;
+    pointer-events: none;
   }
 
   .button {
