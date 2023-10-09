@@ -4,8 +4,10 @@
   import Dialog from "../components/Dialog.svelte";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import makeTea from '/src/assets/makeTea.jpg'
+  import makeTea from "/src/assets/makeTea.jpg";
   import { push } from "svelte-spa-router";
+  import teaCup from "/src/assets/teaCup.png";
+  import teaPot from "/src/assets/teaPot.png";
   const dialog1 = [
     {
       role: "我",
@@ -38,14 +40,14 @@
   ];
   const dialog5 = [
     {
-      role: '',
-      content: '随着杯中的水位逐渐上升，杯壁上显现了四个数字——1520'
+      role: "",
+      content: "随着杯中的水位逐渐上升，杯壁上显现了四个数字——1520",
     },
     {
-      role: '我',
-      content: '这就是答案吗？先去告诉老杨孙女一声吧。'
-    }
-  ]
+      role: "我",
+      content: "这就是答案吗？先去告诉老杨孙女一声吧。",
+    },
+  ];
   let teaLeaf: HTMLImageElement;
   let showTip1 = false;
   let showDialog2 = false;
@@ -55,6 +57,10 @@
   let inputValue = "";
   let showMakeTea = false;
   let showDialog5 = false;
+  let teaPotElement: HTMLImageElement;
+  let container: HTMLDivElement;
+  let showTeaNumber = false;
+
   const submitInput = () => {
     if (inputValue === "倒水入杯") {
       localStorage.setItem("findInput", "1");
@@ -96,6 +102,60 @@
       }
     });
   }
+  function dragTeaMouse(e: MouseEvent) {
+    const startX = e.offsetX;
+    const startY = e.offsetY;
+    
+    function handleMouseMove(e: MouseEvent) {
+      teaPotElement.style.left = `${
+        e.offsetX + teaPotElement.offsetLeft - startX
+      }px`;
+      teaPotElement.style.top = `${
+        e.offsetY + teaPotElement.offsetTop - startY
+      }px`;
+      console.log(teaPotElement.offsetLeft, teaPotElement.offsetTop)
+      if((teaPotElement.offsetLeft > 0 && teaPotElement.offsetLeft < 50) && (teaPotElement.offsetTop > 160 && teaPotElement.offsetTop < 200)) {
+        showTeaNumber = true;
+        setTimeout(() => {
+          showDialog5 = true;
+        },3000)
+      }
+    }
+    teaPotElement.addEventListener("mousemove", handleMouseMove);
+    teaPotElement.addEventListener("mouseup", () => {
+      teaPotElement.removeEventListener("mousemove", handleMouseMove);
+    });
+  }
+  function dragTeaTouch(e: TouchEvent) {
+    const startX =
+      e.targetTouches[0].clientX 
+    const startY =
+      e.targetTouches[0].clientY
+    const startPosX = teaPotElement.offsetLeft;
+    const startPosY = teaPotElement.offsetTop;
+    function handleTouchMove(e: TouchEvent) {
+      teaPotElement.style.left = `${
+        e.targetTouches[0].clientX +
+        startPosX -
+        startX
+      }px`;
+      teaPotElement.style.top = `${
+        e.targetTouches[0].clientY  +
+        startPosY -
+        startY
+      }px`;
+      if((teaPotElement.offsetLeft > 0 && teaPotElement.offsetLeft < 50) && (teaPotElement.offsetTop > 160 && teaPotElement.offsetTop < 200)) {
+        showTeaNumber = true;
+        setTimeout(() => {
+          showDialog5 = true;
+        },3000)
+      }
+    }
+    teaPotElement.addEventListener("touchmove", handleTouchMove);
+    teaPotElement.addEventListener("touchend", () => {
+      teaPotElement.removeEventListener("touchmove", handleTouchMove);
+    });
+  }
   document.addEventListener("mousedown", moveTeaMouse);
   document.addEventListener("touchstart", moveTeaTouch);
   onMount(() => {
@@ -127,13 +187,34 @@
   });
 </script>
 
-<div class="container">
+<div bind:this={container} class="container">
   {#if showMakeTea}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <img src={makeTea} on:click={() => {showDialog5 = true}} class="makeTea" alt="">
+    {#if showTeaNumber}
+      <img src={makeTea} transition:fade class="makeTea" alt="">
+    {:else}
+    <img src={teaCup} class="tea-cup" draggable="false" out:fade alt="茶杯" />
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <img
+      src={teaPot}
+      class="tea-pot"
+      draggable="false"
+      on:mousedown={dragTeaMouse}
+      on:touchstart={dragTeaTouch}
+      bind:this={teaPotElement}
+      out:fade
+      alt="茶壶"
+    />
+    {/if}
     {#if showDialog5}
-      <Dialog dialogs={dialog5} on:over={() => {localStorage.setItem('endDialog1','1');push('/map');}} />
+      <Dialog
+        dialogs={dialog5}
+        on:over={() => {
+          localStorage.setItem("endDialog1", "1");
+          push("/map");
+        }}
+      />
     {/if}
   {:else}
     <img
@@ -263,7 +344,7 @@
     font-size: 24px;
     text-align: center;
     outline: none;
-    font-family: 'Smiley';
+    font-family: "Smiley";
     width: 150px;
   }
 
@@ -277,12 +358,26 @@
   }
 
   .makeTea {
-    width: 90%;
+    width: 600px;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 400px;
     transform: translateX(-50%) translateY(-50%);
     animation: shine 2s infinite ease-in-out;
   }
 
+  .tea-cup {
+    pointer-events: none;
+    position: absolute;
+    width: 100px;
+    top: 400px;
+    left: 50px;
+  }
+
+  .tea-pot {
+    position: absolute;
+    width: 300px;
+    top: 100px;
+    left: 100px;
+  }
 </style>

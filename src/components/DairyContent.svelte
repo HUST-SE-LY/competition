@@ -52,6 +52,11 @@
     font-family: 'ziyou';
     src: url('/demo.ttf');
   }
+
+  @font-face {
+    font-family: "HongLei";
+    src: url("/HongLei.ttf");
+  }
   
   .container {
     background: rgba(71, 71, 71, 0.4);
@@ -65,7 +70,7 @@
     gap: 2rem;
     justify-content: center;
     align-items: center;
-    font-family: 'ziyou';
+    font-family: 'ziyou', "HongLei";
     font-size: 20px;
   }
 

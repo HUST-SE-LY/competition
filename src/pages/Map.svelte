@@ -255,6 +255,7 @@
       <p class="letter-content">当年，我被它深深吸引却苦恼于人们只在意它的味道，对背后的工艺与文化不甚了解。完全商业化的产业是绝绝不可行的，文化将与商业化中泯灭，玉露将失去它那独特的文化魅力，变成冰冷的商品。</p>
       <p class="letter-content">我的孩子，我希望你能在亲身体验之后才找到这封信，理解我的良苦用心。文化传承与保护任重而道远，我这把老骨头已经没法继续走下去了。</p>
       <p class="letter-content">过去的文化属于你们，未来也将是你们的。</p>
+      <p class="letter-content" style="text-align: right;">非遗文化的守塔人</p>
       <div class="fresh-button" on:click={freshGame}>重新游玩</div>
     </div>
     
@@ -282,6 +283,11 @@
   @font-face {
     font-family: "Smiley";
     src: url("/SmileySans-Oblique.ttf.woff2");
+  }
+
+  @font-face {
+    font-family: 'ziyou';
+    src: url('/demo.ttf');
   }
 
   @font-face {
@@ -385,12 +391,15 @@
   }
 
   .letter-title {
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 16px;
+    font-family: 'ziyou';
   }
 
   .letter-content {
     margin-bottom: 16px;
+    font-size: 20px;
+    font-family: 'ziyou',"HongLei";
   }
 
   .fresh-button {
