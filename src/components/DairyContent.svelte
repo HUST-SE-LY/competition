@@ -48,6 +48,10 @@
 </div>
 
 <style>
+  @font-face {
+    font-family: 'ziyou';
+    src: url('/demo.ttf');
+  }
   
   .container {
     background: rgba(71, 71, 71, 0.4);
@@ -61,6 +65,8 @@
     gap: 2rem;
     justify-content: center;
     align-items: center;
+    font-family: 'ziyou';
+    font-size: 20px;
   }
 
   .button {
