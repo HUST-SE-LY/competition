@@ -198,7 +198,7 @@
       on:click={() => push("/teaGarden")}
       class="button button1"
     >
-      菜园
+      茶园
     </div>
     <div
       transition:fade
