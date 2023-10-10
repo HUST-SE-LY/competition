@@ -11,7 +11,7 @@
   const nextDialog = (e: Event) => {
     e.stopPropagation();
     if (isLoading) return;
-    if(dialogs[currentIndex].select) return;
+    if (dialogs[currentIndex].select) return;
     isLoading = true;
     if (currentIndex + 1 >= dialogs.length) {
       dispatch("over");
@@ -34,7 +34,7 @@
       isLoading = false;
       freshDialog = true;
     }, 200);
-  }
+  };
   onMount(() => {
     isOver = false;
   });
@@ -47,8 +47,16 @@
     <div out:fade={{ duration: 300 }} on:click={nextDialog} class="container">
       {#if dialogs[currentIndex].select}
         <div class="select-box">
-          {#each dialogs[currentIndex].select as item,i}
-            <div class="select" on:click={(e) => {e.stopPropagation(); switchPage(item.to)}}>{item.content}</div>
+          {#each dialogs[currentIndex].select as item, i}
+            <div
+              class="select"
+              on:click={(e) => {
+                e.stopPropagation();
+                switchPage(item.to);
+              }}
+            >
+              {item.content}
+            </div>
           {/each}
         </div>
       {/if}
@@ -62,12 +70,14 @@
           {/if}
         </div>
       </div>
-      <img
-        in:fly={{ x: 50, duration: 1000 }}
-        class="role-image"
-        src={dialogs[currentIndex].imageUrl}
-        alt="role"
-      />
+      {#if dialogs[currentIndex].imageUrl}
+        <img
+          in:fly={{ x: 50, duration: 1000 }}
+          class="role-image"
+          src={dialogs[currentIndex].imageUrl}
+          alt="role"
+        />
+      {/if}
     </div>
   {/if}
 </div>
@@ -86,7 +96,7 @@
     height: 100%;
     background: rgba(225, 232, 226, 0.67);
     z-index: 10;
-    font-family: 'Smiley';
+    font-family: "Smiley";
   }
 
   .select-box {
